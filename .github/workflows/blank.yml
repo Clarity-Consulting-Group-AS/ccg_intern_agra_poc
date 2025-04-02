@@ -7,9 +7,9 @@ jobs:
     steps:
       - name: Test Output
         run: echo "Here is the output of the test job"
-     Connect-remote:
-         runs-on: ubuntu-latest
-         steps:
-           -uses: actions/checkout@v3
-            -name: Show Database
-             run : mysql -h ${{secrets.DB_HOSTNAME}} --port 1433 -u${{secrets.DB_USERNAME}} -p${{secrets.DB_PASSWORD}} -e "SHOW DATABASES";
+  Connect-remote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Show Database
+        run: mysql -h ${{secrets.DB_HOSTNAME}} --port 1433 -u${{secrets.DB_USERNAME}} -p${{secrets.DB_PASSWORD}} -e "SHOW DATABASES";
