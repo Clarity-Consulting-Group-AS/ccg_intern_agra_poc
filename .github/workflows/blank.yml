@@ -18,7 +18,7 @@ jobs:
       - name: Install sqlcmd
         run: |
           sudo mkdir -p /etc/apt/keyrings
-          curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/apt/keyrings/microsoft-archive-keyring.gpg
+          curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /etc/apt/keyrings/microsoft-archive-keyring.gpg
           echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/ubuntu/24.04/prod noble main" | sudo tee /etc/apt/sources.list.d/microsoft-prod.list > /dev/null
           sudo apt-get update
           sudo apt-get install -y mssql-tools unixodbc-dev
