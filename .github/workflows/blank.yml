@@ -1,5 +1,5 @@
 name: CCagrapoc
-run-name: ccagraPOC
+run-name: Setting up the MSSQL Database deployment from repository
 on: [push]
 jobs:
   test-output:
@@ -7,3 +7,9 @@ jobs:
     steps:
       - name: Test Output
         run: echo "Here is the output of the test job"
+     Connect-remote:
+         runs-on: ubuntu-latest
+         steps:
+           -uses: actions/checkout@v3
+            -name: Show Database
+             run : mysql -h hostname --port 1433 -uuername -ppassword -e "SHOW DATABASES";
