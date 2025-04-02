@@ -1,0 +1,9 @@
+name : CCagrapoc
+run-name : ccagraPOC
+on : [push]
+jobs :
+  test-output:
+  runs-on : ubuntu-latest
+  steps :
+    - name : Test Output
+      run : echo "Here is the output of the test job"
