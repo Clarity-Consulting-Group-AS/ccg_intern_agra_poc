@@ -28,13 +28,19 @@ jobs:
           echo 'PATH=/opt/mssql-tools/bin:$PATH' >> $GITHUB_ENV
 
       - name: Verify sqlcmd installation
+        shell: bash
         run: |
           source $GITHUB_ENV
           echo $PATH
-          which sqlcmd || { echo "sqlcmd not found"; exit 1; }
+          if ! command -v sqlcmd &> /dev/null
+          then
+              echo "sqlcmd could not be found"
+              exit 1
+          fi
           sqlcmd -? || { echo "sqlcmd help command failed"; exit 1; }
 
       - name: Run sqlcmd command
+        shell: bash
         run: |
           source $GITHUB_ENV
           sqlcmd -S ${{ secrets.DB_HOSTNAME }},1433 -U ${{ secrets.DB_USERNAME }} -P ${{ secrets.DB_PASSWORD }} -Q "SELECT name"
