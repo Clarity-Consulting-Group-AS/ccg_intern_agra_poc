@@ -12,4 +12,4 @@ jobs:
          steps:
            -uses: actions/checkout@v3
             -name: Show Database
-             run : mysql -h hostname --port 1433 -uuername -ppassword -e "SHOW DATABASES";
+             run : mysql -h ${{secrets.DB_HOSTNAME}} --port 1433 -u${{secrets.DB_USERNAME}} -p${{secrets.DB_PASSWORD}} -e "SHOW DATABASES";
