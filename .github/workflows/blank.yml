@@ -2,12 +2,9 @@ name: Build and Test
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+    paths:
+      - 'T-SQL/**'
+  
 jobs:
   build:
     runs-on: ubuntu-latest
