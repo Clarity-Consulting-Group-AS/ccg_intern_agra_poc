@@ -1,28 +1,24 @@
-name: CCagrapoc
-run-name: Setting up the MSSQL Database deployment from repository
-on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-       - name: Checkout code
-         uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-       - name: Install sqlcmd
-         run: |
-             sudo mkdir -p /etc/apt/keyrings
-             curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /usr/share/keyrings/microsoft-prod.gpg
-             echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/ubuntu/24.04/prod noble main" | sudo tee /etc/apt/sources.list.d/microsoft-prod.list
-             sudo apt-get update
-            curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-            sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list)"
-            sudo apt-get update
-            sudo apt-get install mssql-tools unixodbc-dev
-            sudo apt-get update
-            sudo apt-get install -y mssql-tools
-            echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-            source ~/.bashrc
+    - name: Install sqlcmd
+      run: |
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /usr/share/keyrings/microsoft-prod.gpg
+        echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/ubuntu/24.04/prod noble main" | sudo tee /etc/apt/sources.list.d/microsoft-prod.list
+        sudo apt-get update
+        curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+        sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list)"
+        sudo apt-get update
+        sudo apt-get install mssql-tools unixodbc-dev
+        sudo apt-get update
+        sudo apt-get install -y mssql-tools
+        echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+        source ~/.bashrc
 
-       - name: Run sqlcmd command
-         run: |
-            sqlcmd -S ${{secrets.DB_HOSTNAME}},1433 -U ${{secrets.DB_USERNAME}} -P ${{secrets.DB_PASSWORD}} -Q "SELECT name FROM sys.databases;"
+    - name: Run sqlcmd command
+      run: |
+        sqlcmd -S ${{secrets.DB_HOSTNAME}},1433 -U ${{secrets.DB_USERNAME}} -P ${{secrets.DB_PASSWORD}} -Q "SELECT name"
