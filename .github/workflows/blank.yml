@@ -12,4 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Show Database
-        run: mysql -h ${{secrets.DB_HOSTNAME}} --port 1433 -u${{secrets.DB_USERNAME}} -p${{secrets.DB_PASSWORD}} -e "SHOW DATABASES";
+        run: sqlcmd -S ${{secrets.DB_HOSTNAME}},1433 -U ${{secrets.DB_USERNAME}} -P ${{secrets.DB_PASSWORD}} -Q "SELECT name FROM sys.databases;"
